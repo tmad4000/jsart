@@ -1,0 +1,113 @@
+<head>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+
+
+    <script>
+        $(function () {
+            const NUM_SQUARES = 1000
+
+            _.times(NUM_SQUARES, (n) =>
+                $("#app").append($("<span class='square' \
+                    style='background-color: hsl(120, " + n / NUM_SQUARES * 100 + "%, 50%); \
+                    position: relative; \
+                    ' \
+                    data-dx='"+ Math.random() * 10 + "' \
+                    data-dy='"+ Math.random() * 10 + "' >  \
+                        <span class='boundingbox' data-vx='0' data-vy='0'></span> \
+                </span>"))
+            )
+
+            let lastMX, lastMY;
+            let lastTime
+
+            let mouseXV, mouseYV;
+
+
+            $("body").mousemove((e) => {
+
+                const currTime = Date.now()
+                const dt = (currTime - lastTime) || 1
+
+                mouseXV = (e.pageX - lastMX) / dt
+                mouseYV = (e.pageY - lastMY) / dt
+
+                lastMX = e.pageX
+                lastMY = e.pageY
+                lastTime = currTime
+            })
+
+
+
+            $(".boundingbox").mousemove((e) => {
+                // console.log(mouseXV, mouseYV)
+                const PUSH_SPEED = 50
+
+                e.currentTarget.setAttribute('data-vx', mouseXV * PUSH_SPEED)
+                e.currentTarget.setAttribute('data-vy', mouseYV * PUSH_SPEED)
+            })
+
+            tick = () => {
+                $('.square').each((i, e) => {
+                    // console.log(Number($(e).attr('data-dx')))
+                    // console.log($(e).find('.boundingbox').first().attr('data-vy'))
+
+                    // f = k dx
+
+                    // k dx/m =  a
+
+                    let dx = Number($(e).attr('data-dx'))
+                    let dy = Number($(e).attr('data-dy'))
+
+                    let vx = Number($(e).find('.boundingbox').first().attr('data-vx'))
+                    let vy = Number($(e).find('.boundingbox').first().attr('data-vy'))
+
+                    // $(e).find('.boundingbox').first().attr('data-vx', x * k /m)
+
+                    $(e).attr('data-dx', dx + vx)
+                    $(e).attr('data-dy', dy + vy)
+
+
+                    e.style.left = $(e).attr('data-dx') + "px"
+                    e.style.top = $(e).attr('data-dy') + "px"
+                })
+                setTimeout(tick, 30)
+            }
+
+            tick()
+
+        })
+    </script>
+    <style>
+        #app {
+            width: 600px
+        }
+
+        .square {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            margin: 5px;
+        }
+
+        .boundingbox {
+            width: 100px;
+            height: 100px;
+            /* border: 1px solid red; */
+            position: absolute;
+            top: -50px;
+            left: -50px;
+        }
+
+        body {
+            background: black
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app"></div>
+
+
+</body>

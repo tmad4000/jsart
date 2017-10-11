@@ -38,6 +38,8 @@
                 lastMX = e.pageX
                 lastMY = e.pageY
                 lastTime = currTime
+
+                
             })
 
 
@@ -64,17 +66,18 @@
                     let k=.1
                     let f=.05
 
+// debugger
 
-                    let dx = Number($(e).attr('data-dx')) 
-                    let dy = Number($(e).attr('data-dy'))
+                    let dx = Number(e.getAttribute('data-dx')) 
+                    let dy = Number(e.getAttribute('data-dy'))
 
-                    let bb = $(e).find('.boundingbox').first()
+                    let bb = e.childNodes[1]
 
                     // if(isNaN(dx))
                     //     throw new Error();
 
-                    let vx = (Number(bb.attr('data-vx')) ) - dx*k 
-                    let vy = (Number(bb.attr('data-vy')) ) - dy*k
+                    let vx = (Number(bb.getAttribute('data-vx')) ) - dx*k 
+                    let vy = (Number(bb.getAttribute('data-vy')) ) - dy*k
 
                     vx-=vx*f
                     vy-=vy*f
@@ -89,15 +92,15 @@
                     // console.log(vx, vy)
                     // $(e).find('.boundingbox').first().attr('data-vx', x * k /m)
 
-                    $(e).attr('data-dx', dx + vx)
-                    $(e).attr('data-dy', dy + vy)
+                    e.setAttribute('data-dx', dx + vx)
+                    e.setAttribute('data-dy', dy + vy)
 
-                    bb.attr('data-vx', vx)
-                    bb.attr('data-vy', vy)
+                    bb.setAttribute('data-vx', vx)
+                    bb.setAttribute('data-vy', vy)
 
 
-                    e.style.left = $(e).attr('data-dx') + "px"
-                    e.style.top = $(e).attr('data-dy') + "px"
+                    e.style.left = e.getAttribute('data-dx') + "px"
+                    e.style.top = e.getAttribute('data-dy') + "px"
 
                     t++;
                 })

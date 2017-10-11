@@ -11,7 +11,7 @@
 
             _.times(NUM_SQUARES, (n) =>
                 $("#app").append($("<span class='square' \
-                    position: relative; \
+                    style='position: relative; \
                     ' \
                     data-dx='"+ Math.random() * 10 + "' \
                     data-dy='"+ Math.random() * 10 + "' >  \
@@ -96,7 +96,7 @@
 
             tick()
 
-            window.scroll(0, 150)
+            // window.scroll(0, 150)
 
         })
     </script>

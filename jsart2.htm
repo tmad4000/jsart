@@ -1,15 +1,30 @@
 <head>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
 
 
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.9.0/css/bootstrap-slider.min.css" rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.9.0/bootstrap-slider.min.js"></script>
+
     <script>
         $(function () {
             const NUM_SQUARES = 999
-            let hue=270
+            let hue = 270
+            let VIB_MAG = 1.5
+            let VIB_R = 2 * Math.PI / 40
 
-            let t=0;
+
+
+            let t = 0;
 
             _.times(NUM_SQUARES, (n) =>
                 $("#app").append($("<span class='square' \
@@ -44,7 +59,7 @@
 
             $(".boundingbox").mousemove((e) => {
                 // console.log(mouseXV, mouseYV)
-                
+
                 const PUSH_SPEED = 20
 
                 e.currentTarget.setAttribute('data-vx', mouseXV * PUSH_SPEED)
@@ -52,20 +67,20 @@
             })
 
             tick = () => {
-                hue+= 2
+                hue += 2
                 $('.square').each((i, e) => {
-                    e.style.backgroundColor=" hsl("+hue+", " + i / NUM_SQUARES * 100 + "%, 50%)"
+                    e.style.backgroundColor = " hsl(" + hue + ", " + i / NUM_SQUARES * 100 + "%, 50%)"
                     // console.log(Number($(e).attr('data-dx')))
                     // console.log($(e).find('.boundingbox').first().attr('data-vy'))
 
                     // f = k dx
 
                     // k dx/m =  a
-                    let k=.1
-                    let f=.05
+                    let k = .1
+                    let f = .05
 
 
-                    let dx = Number($(e).attr('data-dx')) 
+                    let dx = Number($(e).attr('data-dx'))
                     let dy = Number($(e).attr('data-dy'))
 
                     let bb = $(e).find('.boundingbox').first()
@@ -73,19 +88,16 @@
                     // if(isNaN(dx))
                     //     throw new Error();
 
-                    let vx = (Number(bb.attr('data-vx')) ) - dx*k 
-                    let vy = (Number(bb.attr('data-vy')) ) - dy*k
+                    let vx = (Number(bb.attr('data-vx'))) - dx * k
+                    let vy = (Number(bb.attr('data-vy'))) - dy * k
 
-                    vx-=vx*f
-                    vy-=vy*f
+                    vx -= vx * f
+                    vy -= vy * f
+
+                    vx += VIB_MAG * Math.cos(t * VIB_R)
+                    vy += VIB_MAG * Math.sin(t * VIB_R)
 
 
-                    const VIB_MAG=1
-                    const VIB_R=2*Math.PI/40
-                    vx+=VIB_MAG*Math.cos(t*VIB_R)
-                    vy+=VIB_MAG*Math.sin(t*VIB_R)
-
-                    
                     // console.log(vx, vy)
                     // $(e).find('.boundingbox').first().attr('data-vx', x * k /m)
 
@@ -106,7 +118,34 @@
 
             tick()
 
-            window.scroll(0, 150)
+            // window.scroll(0, 150)
+
+
+            // With JQuery
+            $('#ex1').slider({
+                formatter: function (value) {
+                    return 'Current value: ' + value;
+                }
+            });
+
+
+            $('#ex1').on("slide", function (slideEvt) {
+                VIB_MAG = (slideEvt.value);
+            });
+
+            // With JQuery
+            $('#rSlider').slider({
+                formatter: function (value) {
+                    return 'Current value: ' + value;
+                }
+            });
+
+
+            $('#rSlider').on("slide", function (slideEvt) {
+                VIB_R = (slideEvt.value);
+            });
+
+
 
         })
     </script>
@@ -134,11 +173,34 @@
         body {
             background: black
         }
+
+
+        #ex1Slider .slider-selection {
+            background: #BABABA;
+        }
     </style>
 </head>
 
 <body>
-    <div id="app"></div>
+    <div style="height:50px; " class="container-fluid">
+        <div style="z-index:999;float:left" class="row">
+            <div class="col-sm-1">
+                <br />
+                <br />
+                
+                <input style="z-index:999;float:left" id="ex1" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="8"
+                    data-slider-step=".1" data-slider-value="4" />
+                <br />
+                <br />
+                <br />
+
+                <input style="z-index:999;float:left" id="rSlider" data-slider-id='rSlider' type="text" data-slider-min="0" data-slider-max="1"
+                    data-slider-step=".1" data-slider-value=".5" />
+            </div>
+        </div>
+
+        <div id="app"></div>
+    </div>
 
 
 </body>

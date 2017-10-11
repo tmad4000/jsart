@@ -6,12 +6,11 @@
 
     <script>
         $(function () {
-            const NUM_SQUARES = 1000
+            const NUM_SQUARES = 999
             let hue=270
 
             _.times(NUM_SQUARES, (n) =>
                 $("#app").append($("<span class='square' \
-                    style='background-color: hsl("+hue+", " + n / NUM_SQUARES * 100 + "%, 50%); \
                     position: relative; \
                     ' \
                     data-dx='"+ Math.random() * 10 + "' \
@@ -97,18 +96,20 @@
 
             tick()
 
+            window.scroll(0, 150)
+
         })
     </script>
     <style>
         #app {
-            width: 600px
+            width: 1428px
         }
 
         .square {
             display: inline-block;
-            width: 8px;
-            height: 8px;
-            margin: 5px;
+            width: 18px;
+            height: 18px;
+            margin: 10px;
         }
 
         .boundingbox {
@@ -126,7 +127,7 @@
     </style>
 </head>
 
-<body>
+<body onLoad="">
     <div id="app"></div>
 
 

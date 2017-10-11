@@ -9,6 +9,8 @@
             const NUM_SQUARES = 999
             let hue=270
 
+            let t=0;
+
             _.times(NUM_SQUARES, (n) =>
                 $("#app").append($("<span class='square' \
                     style='position: relative; \
@@ -77,6 +79,12 @@
                     vx-=vx*f
                     vy-=vy*f
 
+
+                    const VIB_MAG=1
+                    const VIB_R=2*Math.PI/40
+                    vx+=VIB_MAG*Math.cos(t*VIB_R)
+                    vy+=VIB_MAG*Math.sin(t*VIB_R)
+
                     
                     // console.log(vx, vy)
                     // $(e).find('.boundingbox').first().attr('data-vx', x * k /m)
@@ -90,6 +98,8 @@
 
                     e.style.left = $(e).attr('data-dx') + "px"
                     e.style.top = $(e).attr('data-dy') + "px"
+
+                    t++;
                 })
                 setTimeout(tick, 30)
             }

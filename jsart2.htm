@@ -10,10 +10,25 @@
             let hue=270
 
             let t=0;
+            let videos=['https://www.smashingmagazine.com/wp-content/uploads/2015/06/10-dithering-opt.jpg',
+            'https://www.w3schools.com/w3images/fjords.jpg']
+            
+            // [Array(NUM_SQUARES)
+            // videos
+            
+            // buildApiRequest('GET',
+            // '/youtube/v3/search',
+            // {'maxResults': '25',
+            //  'forMine': 'true',
+            //  'part': 'snippet',
+            //  'q': 'fun',
+            //  'type': 'video'});
+
 
             _.times(NUM_SQUARES, (n) =>
                 $("#app").append($("<span class='square' \
                     style='position: relative; \
+                    background-image: url(\""+videos[n%videos.length]+"\"); \
                     ' \
                     data-dx='"+ Math.random() * 10 + "' \
                     data-dy='"+ Math.random() * 10 + "' >  \

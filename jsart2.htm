@@ -56,12 +56,15 @@
                     // f = k dx
 
                     // k dx/m =  a
+                    let k=.2
 
                     let dx = Number($(e).attr('data-dx'))
                     let dy = Number($(e).attr('data-dy'))
 
-                    let vx = Number($(e).find('.boundingbox').first().attr('data-vx'))
-                    let vy = Number($(e).find('.boundingbox').first().attr('data-vy'))
+                    let vx = Number($(e).find('.boundingbox').first().attr('data-vx')) - dx*k
+                    let vy = Number($(e).find('.boundingbox').first().attr('data-vy')) - dy*k
+
+                    
 
                     // $(e).find('.boundingbox').first().attr('data-vx', x * k /m)
 

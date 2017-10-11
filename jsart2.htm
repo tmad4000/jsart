@@ -7,10 +7,11 @@
     <script>
         $(function () {
             const NUM_SQUARES = 1000
+            let hue=270
 
             _.times(NUM_SQUARES, (n) =>
                 $("#app").append($("<span class='square' \
-                    style='background-color: hsl(120, " + n / NUM_SQUARES * 100 + "%, 50%); \
+                    style='background-color: hsl("+hue+", " + n / NUM_SQUARES * 100 + "%, 50%); \
                     position: relative; \
                     ' \
                     data-dx='"+ Math.random() * 10 + "' \
@@ -42,34 +43,50 @@
 
             $(".boundingbox").mousemove((e) => {
                 // console.log(mouseXV, mouseYV)
-                const PUSH_SPEED = 50
+                
+                const PUSH_SPEED = 20
 
                 e.currentTarget.setAttribute('data-vx', mouseXV * PUSH_SPEED)
                 e.currentTarget.setAttribute('data-vy', mouseYV * PUSH_SPEED)
             })
 
             tick = () => {
+                hue+= 2
                 $('.square').each((i, e) => {
+                    e.style.backgroundColor=" hsl("+hue+", " + i / NUM_SQUARES * 100 + "%, 50%)"
                     // console.log(Number($(e).attr('data-dx')))
                     // console.log($(e).find('.boundingbox').first().attr('data-vy'))
 
                     // f = k dx
 
                     // k dx/m =  a
-                    let k=.2
+                    let k=.1
+                    let f=.05
 
-                    let dx = Number($(e).attr('data-dx'))
+
+                    let dx = Number($(e).attr('data-dx')) 
                     let dy = Number($(e).attr('data-dy'))
 
-                    let vx = Number($(e).find('.boundingbox').first().attr('data-vx')) - dx*k
-                    let vy = Number($(e).find('.boundingbox').first().attr('data-vy')) - dy*k
+                    let bb = $(e).find('.boundingbox').first()
+
+                    // if(isNaN(dx))
+                    //     throw new Error();
+
+                    let vx = (Number(bb.attr('data-vx')) ) - dx*k 
+                    let vy = (Number(bb.attr('data-vy')) ) - dy*k
+
+                    vx-=vx*f
+                    vy-=vy*f
 
                     
-
+                    // console.log(vx, vy)
                     // $(e).find('.boundingbox').first().attr('data-vx', x * k /m)
 
                     $(e).attr('data-dx', dx + vx)
                     $(e).attr('data-dy', dy + vy)
+
+                    bb.attr('data-vx', vx)
+                    bb.attr('data-vy', vy)
 
 
                     e.style.left = $(e).attr('data-dx') + "px"
@@ -95,12 +112,12 @@
         }
 
         .boundingbox {
-            width: 100px;
-            height: 100px;
+            width: 50px;
+            height: 50px;
             /* border: 1px solid red; */
             position: absolute;
-            top: -50px;
-            left: -50px;
+            top: -25px;
+            left: -25px;
         }
 
         body {

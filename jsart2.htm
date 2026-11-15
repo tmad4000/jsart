@@ -1,4 +1,6 @@
 <head>
+<title>JSArt</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
@@ -138,11 +140,14 @@
             background: black
         }
     </style>
+<link rel="stylesheet" href="release.css">
+<script defer src="app-stamp.js"></script>
 </head>
 
 <body>
     <div id="app"></div>
 
 
-<script defer src="https://worldissuetracker.com/widget/wit-feedback.js" data-tracker-slug="jsart-feedback" data-app="JSArt" data-mode="feedback" data-trigger="tab" data-label="Send feedback"></script>
+<footer class="app-release"><span id="wit-feedback-mount"></span><span data-app-stamp data-show="time" data-src="version.json"></span></footer>
+<script defer src="https://worldissuetracker.com/widget/wit-feedback.js" data-tracker-slug="jsart-feedback" data-app="JSArt" data-mode="feedback" data-trigger="tab" data-label="Send feedback" data-mount-selector="#wit-feedback-mount"></script>
 </body>

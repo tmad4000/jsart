@@ -1,0 +1,3 @@
+Feedback uses the existing per-app WIT board and an inline footer. The time-only release stamp reads version.json generated from the deployed commit; its exact local time and commit are available by tap or keyboard. No content is submitted automatically.
+
+Pages release: after independent review, switch this repository from legacy Pages to GitHub Actions immediately before merging. The workflow preserves the current Jekyll build, including hidden-file exclusions, and stamps the clean commit before packaging _site. Verify existing URLs and version.json after deployment. No custom domain or path change.

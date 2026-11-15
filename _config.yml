@@ -1,0 +1,4 @@
+exclude:
+  - scripts/
+  - VERSION
+  - FEEDBACK-ROLLOUT.md
